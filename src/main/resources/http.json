@@ -1,0 +1,10 @@
+{
+  "port": 80,
+  "webroot": "/tmp",
+  "css": [
+    "style.css"
+    ],
+  "js": [
+    "script.js"
+    ]
+}
