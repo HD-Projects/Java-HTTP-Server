@@ -34,14 +34,10 @@ public class HttpParser {
 
         int _byte;
 
-        int lastChar;
-
         String tempString = "";
 
         while( (_byte = this.inputStream.read()) >= 0){
             tempString += (char) _byte;
-
-            lastChar = _byte;
 
             // This if statement checks if there is a newline and resets the string if there is
             if (tempString.indexOf("\r\n") > 0) {

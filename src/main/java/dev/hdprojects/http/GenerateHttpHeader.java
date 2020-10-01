@@ -39,7 +39,7 @@ public class GenerateHttpHeader {
                 "Date: "+ new Date() + CRLF +
                 "Server: " + CRLF +
                 "Content-Length: " + this.contentLength + CRLF +
-                "Content-Type: " + this.contentType + CRLF;
+                "Content-Type: " + this.contentType + CRLF + CRLF;
     }
 
     private String generateResponseString(){

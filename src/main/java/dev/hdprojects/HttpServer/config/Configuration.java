@@ -4,8 +4,26 @@ public class Configuration {
 
     private int port;
     private String webroot;
+    private String style_replace;
+    private String js_replace;
     private String[] css;
     private String[] js;
+
+    public String getStyle_replace() {
+        return style_replace;
+    }
+
+    public void setStyle_replace(String style_replace) {
+        this.style_replace = style_replace;
+    }
+
+    public String getJs_replace() {
+        return js_replace;
+    }
+
+    public void setJs_replace(String js_replace) {
+        this.js_replace = js_replace;
+    }
 
     public String[] getCss() {
         return css;
