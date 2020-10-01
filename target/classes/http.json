@@ -1,4 +1,12 @@
 {
   "port": 80,
-  "webroot": "/tmp"
+  "webroot": "src/main/resources/webroot",
+  "style_replace": "/*STYLE_REPLACE*/",
+  "js_replace": "/*JS_REPLACE*/",
+  "css": [
+    "style.css"
+    ],
+  "js": [
+    "script.js"
+    ]
 }
