@@ -1,5 +1,6 @@
 package dev.hdprojects.HttpServer.core;
 
+import dev.hdprojects.HttpServer.config.Configuration;
 import dev.hdprojects.http.GenerateHttpHeader;
 import dev.hdprojects.http.HttpParser;
 import dev.hdprojects.website.HtmlParser;
@@ -17,10 +18,13 @@ public class HttpConnectionWorkerThread extends Thread {
 
     private String webRoot;
     private Socket socket;
+    private Configuration conf;
 
-    public HttpConnectionWorkerThread(Socket socket, String webRoot) {
+    public HttpConnectionWorkerThread(Socket socket, String webRoot, Configuration conf) {
         this.webRoot = webRoot;
         this.socket = socket;
+
+        this.conf = conf;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class HttpConnectionWorkerThread extends Thread {
             LOGGER.info("Starting HTTP Parser ... ");
             HttpParser httpParser = new HttpParser(inputStream);
             httpParser.parseHttpRequest();
-            HtmlParser htmlParser = new HtmlParser(webRoot + httpParser.getRequestedPage(), "", "", "", "");
+            HtmlParser htmlParser = new HtmlParser(webRoot + httpParser.getRequestedPage(), conf);
             LOGGER.info("Done With HTTP Parser.");
 
             // Set HTML variable
@@ -52,7 +56,8 @@ public class HttpConnectionWorkerThread extends Thread {
 
             // Generate an HTTP Header and response
             LOGGER.info("Generating HTTP Header ... ");
-            GenerateHttpHeader httpHeader = new GenerateHttpHeader(200, contentLength, "text/html", "hd");
+            LOGGER.info("error: " + htmlParser.getError());
+            GenerateHttpHeader httpHeader = new GenerateHttpHeader(htmlParser.getError(), contentLength, "text/html", "hd");
             String response = httpHeader.toString() + html + CRLF + CRLF;
             LOGGER.info("Done Generating HTTP Header.");
 

@@ -6,8 +6,17 @@ public class Configuration {
     private String webroot;
     private String style_replace;
     private String js_replace;
-    private String[] css;
-    private String[] js;
+    private String page_404;
+    private String css;
+    private String js;
+
+    public String getPage_404() {
+        return page_404;
+    }
+
+    public void setPage_404(String page_404) {
+        this.page_404 = page_404;
+    }
 
     public String getStyle_replace() {
         return style_replace;
@@ -25,19 +34,19 @@ public class Configuration {
         this.js_replace = js_replace;
     }
 
-    public String[] getCss() {
+    public String getCss() {
         return css;
     }
 
-    public void setCss(String[] css) {
+    public void setCss(String css) {
         this.css = css;
     }
 
-    public String[] getJs() {
+    public String getJs() {
         return js;
     }
 
-    public void setJs(String[] js) {
+    public void setJs(String js) {
         this.js = js;
     }
 

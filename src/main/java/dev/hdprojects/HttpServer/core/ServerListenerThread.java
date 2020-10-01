@@ -1,5 +1,6 @@
 package dev.hdprojects.HttpServer.core;
 
+import dev.hdprojects.HttpServer.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +15,12 @@ public class ServerListenerThread extends Thread {
     private int port;
     private String webroot;
     private ServerSocket serverSocket;
+    private Configuration configuration;
 
-    public ServerListenerThread(int port, String webroot) throws IOException {
-        this.port = port;
-        this.webroot = webroot;
+    public ServerListenerThread(Configuration configuration) throws IOException {
+        this.port = configuration.getPort();
+        this.webroot = configuration.getWebroot();
+        this.configuration = configuration;
 
         this.serverSocket = new ServerSocket(this.port);
     }
@@ -31,7 +34,7 @@ public class ServerListenerThread extends Thread {
 
                 LOGGER.info("Connection accepted" + socket.getInetAddress());
 
-                HttpConnectionWorkerThread workerThread = new HttpConnectionWorkerThread(socket, webroot);
+                HttpConnectionWorkerThread workerThread = new HttpConnectionWorkerThread(socket, webroot, configuration);
                 workerThread.start();
 
             }

@@ -3,10 +3,7 @@
   "webroot": "src/main/resources/webroot",
   "style_replace": "<!--STYLE_REPLACE-->",
   "js_replace": "<!--JS_REPLACE-->",
-  "css": [
-    "style.css"
-    ],
-  "js": [
-    "script.js"
-    ]
+  "css": "style.css",
+  "js": "script.js",
+  "page_404": "404.html"
 }
