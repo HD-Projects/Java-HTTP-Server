@@ -6,7 +6,6 @@ import dev.hdprojects.website.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,7 +38,7 @@ public class HttpConnectionWorkerThread extends Thread {
             LOGGER.info("Starting HTTP Parser ... ");
             HttpParser httpParser = new HttpParser(inputStream);
             httpParser.parseHttpRequest();
-            HtmlParser htmlParser = new HtmlParser(new File(webRoot + httpParser.getRequestedPage()), "", "", "", "");
+            HtmlParser htmlParser = new HtmlParser(webRoot + httpParser.getRequestedPage(), "", "", "", "");
             LOGGER.info("Done With HTTP Parser.");
 
             // Set HTML variable

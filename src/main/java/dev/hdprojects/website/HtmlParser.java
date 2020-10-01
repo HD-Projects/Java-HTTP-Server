@@ -11,11 +11,13 @@ public class HtmlParser {
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
 
     private File file;
+    private String filePath;
     private String contents = "";
     private String html = "";
 
-    public HtmlParser(File file, String css, String cssReplace, String JS, String JSReplace) {
-        this.file = file;
+    public HtmlParser(String filePath, String css, String cssReplace, String JS, String JSReplace) {
+        this.file = new File(filePath);
+        this.filePath = filePath;
 
         // Read the file
         try {
@@ -30,9 +32,49 @@ public class HtmlParser {
             // can throw a IOException
             while ((charValue = bufferedReader.read()) != -1) contents += (char) charValue;
         } catch (FileNotFoundException exception) {
-            LOGGER.error("File Not Found: " + exception);
+            if (filePath.charAt(filePath.length()-1) == '/') {
+                try {
+                    // Open the file
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(filePath + "index.html")));
+
+                    int charValue;
+
+                    // Loop through the characters of
+                    // the file and store them to the contents String
+                    // can throw a IOException
+                    while ((charValue = bufferedReader.read()) != -1) contents += (char) charValue;
+                } catch (FileNotFoundException exception1) {
+                    // ERROR: 404
+                    LOGGER.error("File Not Found: " + exception);
+                } catch (IOException exception1) {
+                    // ERROR: 500
+                    LOGGER.error("Error reading file: " + exception);
+                }
+            } else if (!((filePath.substring(filePath.length()-5) == ".html") || (filePath.substring(filePath.length()-4) == ".htm"))) {
+                try {
+                    // Open the file
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(filePath + "/index.html")));
+
+                    int charValue;
+
+                    // Loop through the characters of
+                    // the file and store them to the contents String
+                    // can throw a IOException
+                    while ((charValue = bufferedReader.read()) != -1) contents += (char) charValue;
+                } catch (FileNotFoundException exception1) {
+                    // ERROR: 404
+                    LOGGER.error("File Not Found: " + exception);
+                } catch (IOException exception1) {
+                    // ERROR: 500
+                    LOGGER.error("Error reading file: " + exception);
+                }
+            } else {
+                // ERROR: 404
+                LOGGER.error("File Not Found: " + exception);
+            }
         } catch (IOException exception) {
-            LOGGER.error("Can't Read File: " + exception);
+            // ERROR: 500
+            LOGGER.error("File Not Found: " + exception);
         }
         LOGGER.info(contents);
 
